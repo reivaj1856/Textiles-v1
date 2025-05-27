@@ -39,7 +39,7 @@ export class TestComponent {
 
   async probarConexion(){
   try {
-    const ref = doc(this.firestore, 'product/SicwLlQDRgRok98dh3Nk'); // Ruta de prueba
+    const ref = doc(this.firestore, 'product/1qUJaTdCZNR6ldcC4PBU'); // Ruta de prueba
     const snap = await getDoc(ref);
     if (snap.exists()) {
       this.mensajeConexion = '✅ busqueda de producto realizada correctamente';
