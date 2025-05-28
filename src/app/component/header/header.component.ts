@@ -45,11 +45,12 @@ export class HeaderComponent {
     if (this.toggleClose) {
       this.toggleClose.addEventListener('click', handleClick);
     }
-    this.getCarrito();
+    
 
     // Ejecutar getLogin periódicamente
     setInterval(() => {
       this.getLogin();
+      this.getCarrito();
     }, 2000); // cada 2 segundos
   } 
 

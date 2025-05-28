@@ -5,6 +5,7 @@ import { Product } from '../../../interface/product';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common'; // <-- Importa CommonModule
+import { Firestore, collection, addDoc } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-proforma',
@@ -36,7 +37,7 @@ export class ProformaComponent {
     console.log(this.producto);
   }
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private firestore: Firestore) {
     const nav = this.router.getCurrentNavigation();
     this.producto = nav?.extras.state?.['producto'] ?? [];
   }
@@ -102,5 +103,27 @@ export class ProformaComponent {
       }
       this.cargando = false;
     }, 2000); // 2 segundos de espera
+  }
+
+  async guardarFactura() {
+    const factura = {
+      productos: this.producto,
+      subtotal: this.subtotal,
+      envio: this.envio,
+      impuesto: this.impuesto,
+      total: this.total,
+      nombreTitular: this.nombreTitular,
+      numeroTarjeta: this.numeroTarjeta,
+      fechaExpiracion: this.fechaExpiracion,
+      cvv: this.cvv,
+      fecha: new Date()
+    };
+    try {
+      const facturasCollection = collection(this.firestore, 'facturas');
+      await addDoc(facturasCollection, factura);
+      alert('Factura guardada correctamente en la base de datos.');
+    } catch (error) {
+      alert('Error al guardar la factura: ' + error);
+    }
   }
 }

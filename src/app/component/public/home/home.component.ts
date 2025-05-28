@@ -21,6 +21,9 @@ export default class HomeComponent {
 
   ngOnInit(): void {
     this.getLogin();
+    setInterval(() => {
+      this.getLogin();
+    }, 2000); // cada 2 segundos
   }
   
   getLogin(){
